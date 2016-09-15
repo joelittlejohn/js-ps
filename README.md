@@ -6,9 +6,8 @@ Convert JSON schema to Prismatic/Plumatic schema. Supports complex types and arb
 
 Add to your lein dependencies:
 
-```clj
-[js-ps "0.1.0]
-```
+
+![Latest version](https://clojars.org/js-ps/latest-version.svg)
 
 Convert a JSON schema:
 
