@@ -6,8 +6,8 @@
 (declare >additional-properties >array >enum >object >property >schema >type)
 
 (defn- ref->name
-  [ref]
-  (last (str/split ref #"/")))
+  [prefix ref]
+  (str prefix (last (str/split ref #"/"))))
 
 (defn- resolve-ref
   [m ref]
@@ -61,7 +61,7 @@
   [schema document]
   (if-let [ref (:$ref schema)]
     (let [resolved-schema (resolve-ref document ref)]
-      (s/schema-with-name (>schema resolved-schema document) (ref->name ref)))
+      (s/schema-with-name (>schema resolved-schema document) (ref->name (:title (:info document)) ref)))
     (if (:enum schema)
       (>enum schema document)
       (>type schema document))))
