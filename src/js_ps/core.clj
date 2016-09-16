@@ -58,14 +58,18 @@
     "void"    s/Str
     s/Any))
 
+(defn >one-of
+  [schema document]
+  (->> schema :oneOf (map #(>schema % document)) (apply s/cond-pre)))
+
 (defn >schema
   [schema document]
   (if-let [ref (:$ref schema)]
     (let [resolved-schema (resolve-ref document ref)]
       (s/schema-with-name (>schema resolved-schema document) (ref->name (:title (:info document)) ref)))
-    (if (:enum schema)
-      (>enum schema document)
-      (>type schema document))))
+    (cond (:enum schema) (>enum schema document)
+          (:oneOf schema) (>one-of schema document)
+          :else (>type schema document))))
 
 (defn ->prismatic
   "Convert a Clojure representation of a JSON schema into a Prismatic

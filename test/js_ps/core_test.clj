@@ -74,6 +74,7 @@
                          :properties {:a {:type "integer"}}
                          :additionalProperties {:type "array"
                                                 :items {:type "boolean"}}})))))
+
 (deftest arrays
   (is (= {(s/optional-key :a) [s/Int]}
          (->prismatic {:type "object"
@@ -94,3 +95,7 @@
                        :additionalProperties false})))
   (is (= (s/enum 1 2 3)
          (->prismatic {:type "integer" :enum [1 2 3]}))))
+
+(deftest one-of
+  (is (= (s/cond-pre s/Str s/Int)
+         (->prismatic {:oneOf [{:type "string"} {:type "integer"}]}))))
