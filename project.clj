@@ -1,4 +1,4 @@
-(defproject js-ps "0.1.3-SNAPSHOT"
+(defproject js-ps "0.1.3"
 
   :description "Convert JSON schema to Prismatic/Plumatic schema"
 
