@@ -55,6 +55,7 @@
     "number"  s/Num
     "object"  (>object schema document)
     "string"  s/Str
+    "void"    s/Str
     s/Any))
 
 (defn >schema
