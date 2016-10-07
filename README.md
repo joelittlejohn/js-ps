@@ -61,6 +61,7 @@ This is largely for use with ring-swagger so support for JSON schema features is
 * additionalProperties
 * enum
 * items (but not tuples)
+* oneOf
 * properties
 * required
 * type (but not union types)
