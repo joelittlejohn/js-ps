@@ -10,6 +10,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [prismatic/schema "1.1.3"]]
 
-  :profiles {:dev {:dependencies [[cheshire "5.6.3"]]}}
+  :profiles {:dev {:dependencies [[cheshire "5.6.3"]
+                                  [metosin/ring-swagger "0.22.11"]]}}
 
   :deploy-repositories [["releases" :clojars]])

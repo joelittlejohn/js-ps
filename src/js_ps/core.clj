@@ -1,7 +1,11 @@
 (ns js-ps.core
   (:require [clojure.string :as str]
-            [schema.core :as s]
-            [cheshire.core :as json]))
+            [schema.core :as s]))
+
+(def describe-fn (try
+                   (require 'ring.swagger.json-schema)
+                   (resolve (symbol "ring.swagger.json-schema/describe"))
+                   (catch Exception e)))
 
 (declare >additional-properties >array >enum >object >property >schema >type)
 
@@ -67,9 +71,10 @@
   (if-let [ref (:$ref schema)]
     (let [resolved-schema (resolve-ref document ref)]
       (s/schema-with-name (>schema resolved-schema document) (ref->name (:title (:info document)) ref)))
-    (cond (:enum schema) (>enum schema document)
-          (:oneOf schema) (>one-of schema document)
-          :else (>type schema document))))
+    (cond-> (cond (:enum schema) (>enum schema document)
+                  (:oneOf schema) (>one-of schema document)
+                  :else (>type schema document))
+      (and describe-fn (:description schema)) (describe-fn (:description schema)))))
 
 (defn ->prismatic
   "Convert a Clojure representation of a JSON schema into a Prismatic
