@@ -59,6 +59,7 @@ alternatively, you can pass a parent document against which refs will be resolve
 This is largely for use with ring-swagger so support for JSON schema features is not intended to be exhaustive. The supported schema rules include:
 
 * additionalProperties
+* description
 * enum
 * items (but not tuples)
 * oneOf
